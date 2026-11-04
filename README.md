@@ -1,20 +1,17 @@
-# Introduction 
-TODO: Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project. 
+# The Skill Collection
 
-# Getting Started
-TODO: Guide users through getting your code up and running on their own system. In this section you can talk about:
-1.	Installation process
-2.	Software dependencies
-3.	Latest releases
-4.	API references
+Reusable agent skills for GitHub Copilot in VS Code. Each skill lives in its own directory under `.github/skills/` and contains a `SKILL.md` file. Supporting references and scripts can live alongside it.
 
-# Build and Test
-TODO: Describe and show how to build your code and run the tests. 
+## Install for your user
 
-# Contribute
-TODO: Explain how other users and developers can contribute to make your code better. 
+Clone this repository on each machine where you want to use the skills, then run:
 
-If you want to learn more about creating good readme files then refer the following [guidelines](https://docs.microsoft.com/en-us/azure/devops/repos/git/create-a-readme?view=azure-devops). You can also seek inspiration from the below readme files:
-- [ASP.NET Core](https://github.com/aspnet/Home)
-- [Visual Studio Code](https://github.com/Microsoft/vscode)
-- [Chakra Core](https://github.com/Microsoft/ChakraCore)
+```bash
+bash scripts/install-skills.sh
+```
+
+The installer links this repository's `.github/skills/` directory to `~/.copilot/skills/`, making the skills available across your VS Code workspaces. Because it is a link, changes pulled into this repository are immediately available. To stop using the collection, remove the link at `~/.copilot/skills/`.
+
+The script leaves an existing `~/.copilot/skills/` path untouched and reports a conflict instead. If you already have personal skills there, merge or move them before installing; do not replace the directory blindly.
+
+Skills in `.github/skills/` are also available when you open this repository directly in VS Code. See the [VS Code Agent Skills documentation](https://code.visualstudio.com/docs/copilot/customization/agent-skills) for skill format and discovery details.
