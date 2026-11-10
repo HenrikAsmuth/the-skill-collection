@@ -1,6 +1,7 @@
 # The Skill Collection
 
 Reusable agent skills for GitHub Copilot in VS Code. Each skill lives in its own directory under `.github/skills/` and contains a `SKILL.md` file. Supporting references and scripts can live alongside it.
+A large part of it is a curated selection of Matt Pococks skill (https://github.com/mattpocock/skills) with small adaptions. Others are continuously being added (see below).
 
 ## Spec review
 
