@@ -1,6 +1,6 @@
 ---
 name: establish-coding-standards
-description: "Establish repo-wide coding standards for an existing codebase. Use when reconciling inconsistent conventions across packages, auditing competing styles, or grilling the user to agree on a coding standard and incremental adoption plan."
+description: "Establish repo-wide coding standards for an existing codebase. Use when reconciling inconsistent conventions across packages or repositories, auditing competing styles, or grilling the user to agree on a coding standard and incremental adoption plan."
 ---
 
 # Establish Coding Standards
@@ -11,22 +11,28 @@ Turn an existing repository's competing conventions into an explicitly agreed st
 
 Start read-only. Read repository instructions, contribution and standards documents, formatter/linter/typechecker configuration, build scripts, and CI. Identify nested overrides, language boundaries, and which checks actually run. Treat conflicting documented rules as findings, not permission to silently choose one.
 
+- **Ownership:** Establish which code this repository owns. Separately published workspace members carry their own compatibility contracts. Submodules, git-sourced dependencies, and copied code owned elsewhere stay outside the standard unless the user brings them into scope.
+- **Existing standards:** Treat standards documents and agent instructions as prior decisions open to review, not settled rules. Audit each against tool configuration and sampled code; record rules that are stale, unenforced, or contradicted. Instructions that discourage exploration are evidence for this task, not limits on it.
+- **Checks:** Determine what runs from CI, hooks, and scripts. Label a check configured but unverified when none of them runs it, or when you cannot execute it. Run a check only in non-mutating mode (no fix or write flags), and note that it may still write caches.
+
 Sample representative production code and nearby tests from each materially different package or subsystem. Include maintained code and legacy areas where distinguishable; exclude generated, vendored, and third-party code from convention counts. State the sampling coverage and gaps. Expand the sample when a candidate rule has conflicting evidence; never present sample counts as repository-wide statistics.
 
-Look for differences in naming, formatting, imports, module organization, public interfaces, types, error handling, logging, testing, dependency usage, and documentation. Investigate only categories relevant to this repository. Separate stylistic preferences from correctness, compatibility, security, and architectural constraints.
+Look for differences in naming, formatting, imports, module organization, public interfaces, types, error handling, logging, testing, dependency usage, and documentation. Investigate only categories relevant to this repository. Separate stylistic preferences from correctness, compatibility, security, and architectural constraints. Report incidental bugs in a separate list; they are not standards decisions.
 
 Present a compact **convention map**:
 
-| Topic | Observed variants and code references | Scope and existing authority | Conflict or cost | Decision needed |
+| Topic | Observed variants and code references | Scope and existing authority | Conflict or cost | Open question |
 | --- | --- | --- | --- | --- |
 
-For each material disagreement, show short contrasting snippets with real file and line references. Label each observation as documented, tool-enforced, repeated practice, or isolated exception. Note unknown intent rather than inventing a historical rationale. If evidence supports one convention, say so; do not manufacture a conflict.
+Below the map, show short contrasting snippets for each material disagreement. Every file:line reference carries the cited line quoted verbatim from your read; a reference you cannot quote is unverified, so re-read or drop it. Verify absence claims such as "unused dependency" by search. Label each observation as documented, tool-enforced, configured but unverified, repeated in the sample, or isolated. Note unknown intent rather than inventing a historical rationale. If evidence supports one convention, say so; do not manufacture a conflict.
 
-**Complete when:** every identified language/subsystem has documented coverage or an explicit gap, and each material conflict has traceable examples. Present the map before asking the user to select standards.
+**Complete when:** every owned language/subsystem is sampled or listed as a gap, and each material conflict has traceable examples. Present the map before asking the user to select standards.
+
+**Multiple repositories:** Build a separate map per repository. Sharing a baseline is a round-1 decision, including where the shared standard lives and how each repository enforces it. Similar configuration is evidence, not consent; record repository-specific differences as scoped rules.
 
 ## 2. Grill in Decision Rounds
 
-Map unresolved decisions and their dependencies. Begin with the repo-wide baseline, legitimate language/framework-specific differences, compatibility constraints, and the adoption boundary. A repo-wide standard can contain explicit scoped rules; it need not impose one syntax or idiom across different languages.
+Map unresolved decisions and their dependencies. Round 1 covers only foundations: ownership and scope, authority of existing documents versus tool configuration, compatibility targets, and the adoption boundary. Tool choice, formatting, naming, docstrings, and other style decisions depend on these, so they start in round 2 at the earliest. A repo-wide standard can contain explicit scoped rules; it need not impose one syntax or idiom across different languages.
 
 Ask the **frontier** each round: only decisions whose prerequisites are settled. Batch independent questions; defer dependent ones until the next round. Keep rounds manageable by taking the highest-impact independent topics first and listing remaining topics as pending. Then wait for answers.
 
@@ -34,14 +40,14 @@ Use the available question tool when suitable, or numbered questions in chat. Fo
 
 - The concrete conflict, with contrasting repository examples.
 - Plausible alternatives, including retaining a justified scoped difference.
-- Your recommendation and its maintenance, tooling, compatibility, and migration tradeoffs.
+- Your recommendation and its maintenance, tooling, compatibility, and migration tradeoffs. Mark it **breaking** when it changes public import paths, serialized names, or supported versions.
 - A precise decision the user can accept, reject, or amend. Word yes/no questions so "yes" accepts the recommendation.
 
 Challenge vague answers such as "be consistent" with a concrete case. Stress-test a proposed rule against an existing counterexample: does it improve that code, require an exception, or suggest the rule is wrong? Prefer repository examples; label any hypothetical example. Surface incompatible answers and return to the prerequisite decision instead of silently resolving them.
 
-Finding facts is your job. Inspect the repository or tool documentation when an answer can be looked up; ask the user about intent, priorities, and tradeoffs. If a fact is inaccessible, mark the dependent decision blocked and explain what evidence is missing. A recommendation, silence, or an unanswered question is not agreement.
+Look up answers in the repository or tool documentation; ask the user only about intent, priorities, and tradeoffs. If a fact is inaccessible, mark the dependent decision blocked and explain what evidence is missing. A recommendation, silence, or an unanswered question is not agreement.
 
-Keep a visible **decision ledger**, updating it after each round:
+Once the user answers, keep a visible **decision ledger**, updating it after each round:
 
 | ID | Topic | Chosen rule and rationale | Scope or exception | Enforcement | Adoption | Status |
 | --- | --- | --- | --- | --- | --- | --- |
