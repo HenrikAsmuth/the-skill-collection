@@ -11,6 +11,12 @@ Inspired by the review concerns in Google's [EGM review workflow](https://github
 
 See the [review-spec skill](.github/skills/engineering/review-spec/SKILL.md) for the full review criteria. It is standalone and requires no EGM installation.
 
+## Establish coding standards
+
+Use `/establish-coding-standards` to reconcile conventions in an existing codebase. It surfaces competing patterns with concrete code examples, grills you in decision rounds to agree on a repo-wide standard and scoped exceptions, and proposes enforcement and incremental adoption. Repository changes require explicit approval; mass reformatting is not assumed.
+
+See the [establish-coding-standards skill](.github/skills/engineering/establish-coding-standards/SKILL.md) for the full workflow.
+
 ## Install for your user
 
 Clone this repository on each machine where you want to use the skills, then use the installer for your shell.
