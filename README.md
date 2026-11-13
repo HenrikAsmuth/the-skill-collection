@@ -44,3 +44,12 @@ This creates a symlink from `~/.copilot/skills/` to this repository's `.github/s
 Both installers leave an existing destination untouched and report a conflict. If you already have personal skills at the destination, merge or move them before installing; do not replace the directory blindly. Since the destination is a link, changes pulled into this repository are immediately available. To stop using the collection, remove the link at the destination path.
 
 Skills in `.github/skills/` are also available when you open this repository directly in VS Code. See the [VS Code Agent Skills documentation](https://code.visualstudio.com/docs/copilot/customization/agent-skills) for skill format and discovery details.
+
+## Changelog
+
+### 2026-11-13
+
+- Made [TDD](.github/skills/engineering/tdd/SKILL.md) test runs selective: one test per cycle, then the affected behavior and callers after each slice.
+- Updated [implement](.github/skills/engineering/implement/SKILL.md) and [implement-spec](.github/skills/engineering/implement-spec/SKILL.md) to check test duration before broad runs and require a full-suite gate on the final revision after integration and review fixes, regardless of duration, rather than repeating it per agent. Blocked gates must be reported explicitly; scoped tests are not a substitute.
+- Updated [code-review](.github/skills/engineering/code-review/SKILL.md) to reuse validation results, run targeted tests to verify concrete findings, and check for missing behavioral test coverage. The implementer owns the final full-suite gate; standalone reviews coordinate one full run if no result exists for the reviewed revision.
+- Added [retro](.github/skills/engineering/retro/SKILL.md) guidance for recording observed test durations and scoped-run pointers.

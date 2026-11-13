@@ -35,4 +35,5 @@ When the shape of that interface is itself in question (how deep the module is, 
 
 - **Red before green.** Write the failing test first, then only enough code to pass it. Don't anticipate future tests or add speculative features.
 - **One slice at a time.** One seam, one test, one minimal implementation per cycle.
+- **Run the narrowest test that can go red.** Each cycle runs only the test you just wrote. When a slice is done, widen to its **blast radius**: the tests covering the changed behavior and affected callers. Use the runner's related- or changed-files filter when available, or select the relevant tests in the packages you touched. The full suite is a **gate** at an integration checkpoint, not part of the loop.
 - **Refactoring is not part of the loop.** It belongs to the review stage (see the `code-review` skill), not the red → green implementation cycle.

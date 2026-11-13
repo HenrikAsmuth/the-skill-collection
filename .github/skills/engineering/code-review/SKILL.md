@@ -10,6 +10,10 @@ Two-axis review of the diff between `HEAD` and a fixed point the user supplies:
 
 Both axes run as **parallel sub-agents** so they don't pollute each other's context, then this skill aggregates their findings. Start every sub-agent with a fresh context window.
 
+Reuse existing validation results for the reviewed revision. Run narrowly scoped tests when needed to confirm a concrete finding. Distinguish inspected evidence from execution results and state any execution limitations.
+
+The full suite must run at least once for the final revision, regardless of duration. In an implementation workflow, leave that gate to the implementer after review fixes. For a standalone review, the coordinating reviewer runs it once if no completed full-suite result exists for the reviewed revision; the two sub-agents use targeted tests only. Report commands, outcomes, durations, and any blocked or incomplete validation; scoped tests are not a substitute for the full-suite gate.
+
 The issue tracker should have been provided to you. If not, tell the user to run `/setup-matt-pocock-skills`.
 
 ## Process
@@ -62,14 +66,16 @@ Issue both sub-agent calls together, in the foreground, and aggregate the report
 **Standards sub-agent prompt** should include:
 
 - The full diff command and commit list.
+- The execution boundary: "Reuse existing validation results. Run narrowly scoped tests when needed to confirm a concrete finding. The implementer or coordinating reviewer owns the full-suite gate; report your test commands, outcomes, durations, and execution limitations."
 - The list of standards-source files you found in step 3, **plus the smell baseline from step 3** pasted in full (the sub-agent has no other access to it).
 - The brief: "Report, per file/hunk where relevant, (a) every place the diff violates a documented standard: cite the standard (file + the rule); and (b) any baseline smell you spot: name it and quote the hunk. Distinguish hard violations from judgement calls: documented-standard breaches can be hard, but baseline smells are always judgement calls, and a documented repo standard overrides the baseline. Skip anything tooling enforces. Under 400 words."
 
 **Spec sub-agent prompt** should include:
 
 - The diff command and commit list.
+- The execution boundary: "Reuse existing validation results. Run narrowly scoped tests when needed to confirm a concrete finding. The implementer or coordinating reviewer owns the full-suite gate; report your test commands, outcomes, durations, and execution limitations."
 - The path or fetched contents of the spec.
-- The brief: "Report: (a) requirements the spec asked for that are missing or partial; (b) behaviour in the diff that wasn't asked for (scope creep); (c) requirements that look implemented but where the implementation looks wrong. Quote the spec line for each finding. Under 400 words."
+- The brief: "Report: (a) requirements the spec asked for that are missing or partial; (b) behaviour in the diff that wasn't asked for (scope creep); (c) requirements that look implemented but where the implementation looks wrong; (d) changed behavior with no relevant test coverage, checking existing tests as well as the diff before reporting a gap. Quote the spec line for each finding. Under 400 words."
 
 If the spec is missing, skip the Spec sub-agent and note this in the final report.
 
