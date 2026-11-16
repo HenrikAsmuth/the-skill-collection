@@ -1,0 +1,31 @@
+iteration: NN_<topic>
+
+# One entry per row of the predictions table in LOG.md.
+predictions:
+  - id: P1
+    hypothesis: H1
+    metric: <METRICS.md id>
+    if_true: <expected outcome>
+    if_false: <expected outcome>
+
+cases:
+  - id: <case id, GLOSSARY naming>
+    description: <in words>
+    testbed: <TESTBEDS.md id>
+    role: test            # test | control | bridge | null
+    control: <case id, or path of an existing baseline run>
+    changes: {}           # versus the control; one change per test case
+    serves: [P1]
+    planned_end: <simulated time or iterations>
+    estimate: <wall time, resources>
+    # Filled by /experiment-run
+    status: planned       # planned | launched | running | finished | failed
+    solver_commit:
+    build:
+    config_hash:
+    resource:
+    pid_or_job:
+    output:
+    log:
+    launched:
+    finished:
