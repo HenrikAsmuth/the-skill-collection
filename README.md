@@ -17,6 +17,15 @@ Use `/establish-coding-standards` to reconcile conventions in an existing codeba
 
 See the [establish-coding-standards skill](.github/skills/engineering/establish-coding-standards/SKILL.md) for the full workflow.
 
+## Numerical experiments
+
+The `numerics/` skills run an iterative numerical investigation (hypothesis, run, evaluation, repeat) as a fixed sequence of phases, each its own skill. Use `/experiment` to see where an investigation stands and which step comes next.
+
+- `/experiment-init` once per investigation: sets up the investigation repo and records everything specific to it (resources, data, solver repo and build rules, test beds, metrics). Expects a domain model from `/grill-with-docs`.
+- Per iteration: `/experiment-frame` (hypotheses checked against the code, predictions), `/experiment-design` (cases with controls, acceptance criteria fixed before runs, solver spec), implementation with `/review-spec` and `/implement` in the solver repo, `/experiment-run`, `/experiment-analyse`, `/experiment-review`, `/experiment-close`.
+
+Logs, plans and small results live in the investigation repo, one folder per iteration, with a living `STATE.md`; solver changes stay in the solver's git, linked by a commit trailer. Shared rules and file templates: [numerics/experiment/](.github/skills/numerics/experiment/).
+
 ## Install for your user
 
 Clone this repository on each machine where you want to use the skills, then use the installer for your shell.
@@ -46,6 +55,10 @@ Both installers leave an existing destination untouched and report a conflict. I
 Skills in `.github/skills/` are also available when you open this repository directly in VS Code. See the [VS Code Agent Skills documentation](https://code.visualstudio.com/docs/copilot/customization/agent-skills) for skill format and discovery details.
 
 ## Changelog
+
+### 2026-11-16
+
+- Added the [numerics experiment skills](.github/skills/numerics/experiment/SKILL.md): a router plus init, frame, design, run, analyse, review and close phases for iterative numerical investigations, with shared conventions and templates. Distilled from a retrospective of a multi-week solver investigation.
 
 ### 2026-11-13
 
