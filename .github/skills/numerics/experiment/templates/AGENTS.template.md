@@ -1,6 +1,6 @@
 # <investigation name>
 
-Numerical investigation run with the `experiment-*` skills; `/experiment` names the next step.
+Numerical investigation run with the `experiment-*` skills; `/experiment` tracks status and orchestrates phase sessions.
 
 - Current picture: `STATE.md`. Read it before answering questions about the investigation.
 - Machine, data, solver and hard rules: `CONSTRAINTS.md`.

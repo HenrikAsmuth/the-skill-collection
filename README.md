@@ -19,7 +19,7 @@ See the [establish-coding-standards skill](.github/skills/engineering/establish-
 
 ## Numerical experiments
 
-The `numerics/` skills run an iterative numerical investigation (hypothesis, run, evaluation, repeat) as a fixed sequence of phases, each its own skill. Use `/experiment` to see where an investigation stands and which step comes next.
+The `numerics/` skills run an iterative numerical investigation (hypothesis, run, evaluation, repeat) as a fixed sequence of phases, each its own skill. Use `/experiment` to check where an investigation stands and orchestrate its phases as nested sessions in the VS Code session tree (confirming before spawning, then optionally auto-advancing across unblocked phases up to the next gate).
 
 - `/experiment-init` once per investigation: sets up the investigation repo and records everything specific to it (resources, data, solver repo and build rules, test beds, metrics). Expects a domain model from `/grill-with-docs`.
 - Per iteration: `/experiment-frame` (hypotheses checked against the code, predictions), `/experiment-design` (cases with controls, acceptance criteria fixed before runs, solver spec), implementation with `/review-spec` and `/implement` in the solver repo, `/experiment-run`, `/experiment-analyse`, `/experiment-review`, `/experiment-close`.
