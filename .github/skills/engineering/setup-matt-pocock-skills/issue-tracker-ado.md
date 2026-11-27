@@ -12,7 +12,10 @@ Always pass `--org <org-url>` (and `--project <project>` where applicable) so co
 
 ## Conventions
 
-- **Create a work item**: `az boards work-item create --org <org-url> --project <project> --type "Product Backlog Item" --title "..." --description "..."`. Use `Epic`, `Feature`, `Product Backlog Item`, `Bug`, or `Task` as appropriate.
+- **Create a work item**: always fill out the fields rendered on the work item's Scrum form:
+  - **Product Backlog Item**: `az boards work-item create --org <org-url> --project <project> --type "Product Backlog Item" --title "..." --description "..." --fields "Microsoft.VSTS.Common.AcceptanceCriteria=<ul><li>...</li></ul>"`.
+  - **Bug**: `az boards work-item create --org <org-url> --project <project> --type "Bug" --title "..." --fields "Microsoft.VSTS.TCM.ReproSteps=<p>...</p>" "Microsoft.VSTS.Common.AcceptanceCriteria=<ul><li>...</li></ul>"`. Do **not** rely on `--description` (`System.Description`) on Scrum Bugs — it is hidden in the ADO Bug form.
+  - **Feature / Epic**: populate `System.Description` (`--description`) with scope, motivation, and goals.
 - **Read a work item**: `az boards work-item show --org <org-url> --id <id> --output json`.
 - **List / query work items**: `az boards query --org <org-url> --project <project> --wiql "SELECT [System.Id], [System.Title], [System.State], [System.Tags] FROM WorkItems WHERE [System.TeamProject] = '<project>' AND [System.State] <> 'Done' AND [System.State] <> 'Removed'" --output json`. Filter tags with `AND [System.Tags] CONTAINS '<tag>'`.
 - **Make a work item a child of a parent** (e.g. PBI → Feature, Feature → Epic): `az boards work-item relation add --org <org-url> --id <child-id> --relation-type parent --target-id <parent-id>`.
